@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaReelSave</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #fda085 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .instagram-gradient {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .download-gradient {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584);
+        }
+
+        .input-glow:focus {
+            box-shadow: 0 0 0 3px rgba(225, 48, 108, 0.4);
+        }
+
+        .btn-hover {
+            transition: all 0.3s ease;
+            background-size: 200% auto;
+        }
+
+        .btn-hover:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(225, 48, 108, 0.4);
+        }
+
+        .btn-download:hover {
+            box-shadow: 0 10px 40px rgba(64, 93, 230, 0.4);
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            50% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(0.8); opacity: 1; }
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .success-card {
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .result-card {
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes scaleUp {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .download-card {
+            animation: scaleUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #405de6, #5851db, #833ab4, #c13584);
+            border-radius: 2px;
+            animation: progress 2s ease-in-out forwards;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .icon-reel {
+            animation: reelFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes reelFloat {
+            0%, 100% { 
+                transform: translateY(0px);
+            }
+            50% { 
+                transform: translateY(-15px);
+            }
+        }
+
+        .download-btn-pulse {
+            animation: buttonPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(225, 48, 108, 0.6);
+            }
+            50% { 
+                box-shadow: 0 0 0 15px rgba(225, 48, 108, 0);
+            }
+        }
+
+
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <!-- Floating Decorative Elements -->
+    <div class="fixed top-20 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl float-animation"></div>
+    <div class="fixed bottom-20 right-10 w-32 h-32 bg-pink-300/20 rounded-full blur-xl float-animation" style="animation-delay: -2s;"></div>
+    <div class="fixed top-1/3 right-20 w-16 h-16 bg-purple-300/20 rounded-full blur-xl float-animation" style="animation-delay: -4s;"></div>
+    <div class="fixed bottom-1/3 left-20 w-24 h-24 bg-orange-300/20 rounded-full blur-xl float-animation" style="animation-delay: -3s;"></div>
+
+    <!-- Main Container -->
+    <div class="w-full max-w-2xl mx-auto">
+        
+        <!-- Logo & Title -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 instagram-gradient rounded-2xl mb-4 shadow-2xl pulse-ring">
+                <i class="fab fa-instagram text-white text-4xl"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2 drop-shadow-lg">
+                Insta Reel Save
+            </h1>
+            <p class="text-white/80 text-lg">Download Instagram Reels in HD Quality</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="glass-card rounded-3xl p-6 md:p-10 mb-8">
+            
+            <!-- Django Form -->
+            <form method="POST" id="downloadForm">
+                {% csrf_token %}
+
+                
+                <!-- Input Section -->
+                <div class="mb-6">
+                    <label class="block text-white font-medium mb-3 text-lg">
+                        <i class="fas fa-link mr-2"></i>Paste Reel URL
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            name="reel_url"
+                            id="reelUrl" 
+                            placeholder="https://www.instagram.com/reel/..."
+                            class="w-full px-5 py-4 pr-14 rounded-2xl bg-white/90 text-gray-800 placeholder-gray-400 outline-none input-glow transition-all text-base md:text-lg"
+                            required
+                        >
+                        <button 
+                            type="button"
+                            id="pasteBtn"
+                            onclick="pasteFromClipboard()"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-pink-500 transition-colors"
+                            title="Paste from clipboard"
+                        >
+                            <i class="fas fa-paste text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+
+                    <!-- Download Button -->
+                <button 
+                    type="submit"
+                    id="searchBtn"
+                    class="w-full instagram-gradient text-white font-semibold py-4 px-6 rounded-2xl text-lg btn-hover flex items-center justify-center gap-3 cursor-pointer"
+                >
+                    <i class="fas fa-download"></i>
+                    <span>Download Reel</span>
+                </button>
+            </form>
+
+            {% if error %}
+            <div class="mt-6 animate-bounce">
+                <div class="p-4 bg-red-500/20 border border-red-400/50 rounded-xl text-white text-center">
+                    <i class="fas fa-exclamation-circle mr-2 text-red-300"></i>
+                    <span>{{ error }}</span>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Result Section -->
+            <div id="resultSection" class="mt-8 hidden result-card">
+                <div class="rounded-3xl p-8 border border-white/20 glass-card">
+                    <!-- Searching State -->
+                    <div id="searchingContent" class="text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full blur animate-pulse"></div>
+                            <div class="absolute inset-0 instagram-gradient rounded-full animate-spin" style="animation-duration: 3s;"></div>
+                            <div class="absolute inset-2 bg-black/60 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                <i class="fas fa-spinner text-white text-3xl animate-spin"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold mb-2">Finding Your Reel</h3>
+                        <div class="mb-4">
+                            <p class="text-white/70 text-sm">Please wait...</p>
+                            <div class="progress-bar w-full mt-4"></div>
+                        </div>
+                    </div>
+
+                    <!-- Success State -->
+                    <div id="successContent" class="text-center hidden">
+                        <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <div class="w-full h-full rounded-full instagram-gradient flex items-center justify-center icon-reel shadow-lg">
+                                <i class="fas fa-play text-white text-3xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold mb-3">Ready to Download!</h3>
+                        <p class="text-white/70 text-sm mb-6">Your Instagram reel has been found and is ready</p>
+                        
+                        <a href="{% url 'download_video' %}?url={{ download_url|urlencode }}" id="downloadLink" class="inline-block w-full">
+                            <button type="button" class="w-full download-gradient text-white font-bold py-4 px-6 rounded-2xl text-lg btn-hover btn-download flex items-center justify-center gap-3 cursor-pointer download-btn-pulse">
+                                <i class="fas fa-download"></i>
+                                <span>Download Video</span>
+                            </button>
+                        </a>
+                    </div>
+
+                    <!-- Download Complete State -->
+                    <div id="completeContent" class="text-center hidden">
+                        <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <div class="w-full h-full rounded-full bg-green-500 flex items-center justify-center shadow-lg bounce">
+                                <i class="fas fa-check text-white text-3xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold mb-3">Download Completed!</h3>
+                        <p class="text-white/70 text-sm mb-6">Your video is being downloaded. Check your downloads folder.</p>
+                        
+                        <button onclick="location.href='/'" class="w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-6 rounded-2xl transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-redo"></i>
+                            <span>Download Another</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="feature-card glass-card rounded-2xl p-5 text-center">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-bolt text-yellow-300 text-xl"></i>
+                </div>
+                <h3 class="text-white font-semibold mb-1">Fast Download</h3>
+                <p class="text-white/70 text-sm">Lightning fast server speed</p>
+            </div>
+            <div class="feature-card glass-card rounded-2xl p-5 text-center">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-blue-300 text-sm font-bold border-2 border-blue-300 rounded px-1">HD</span>
+                </div>
+                <h3 class="text-white font-semibold mb-1">HD Quality</h3>
+                <p class="text-white/70 text-sm">Original video quality</p>
+            </div>
+            <div class="feature-card glass-card rounded-2xl p-5 text-center">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-shield-alt text-green-300 text-xl"></i>
+                </div>
+                <h3 class="text-white font-semibold mb-1">100% Safe</h3>
+                <p class="text-white/70 text-sm">No login required</p>
+            </div>
+        </div>
+
+        <!-- How to Use -->
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-6">
+                <i class="fas fa-question-circle mr-2"></i>How to Download
+            </h2>
+            <div class="space-y-4">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 instagram-gradient rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white">1</div>
+                    <div>
+                        <h4 class="text-white font-medium">Copy Reel Link</h4>
+                        <p class="text-white/70 text-sm">Open Instagram, go to the Reel, tap ⋯ and select "Copy Link"</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 instagram-gradient rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white">2</div>
+                    <div>
+                        <h4 class="text-white font-medium">Paste URL</h4>
+                        <p class="text-white/70 text-sm">Paste the copied link in the input field above</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 instagram-gradient rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white">3</div>
+                    <div>
+                        <h4 class="text-white font-medium">Download</h4>
+                        <p class="text-white/70 text-sm">Click "Get Download Link" and then "Download Now" to save your Reel!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-12 glass-card rounded-3xl p-8 md:p-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Brand Section -->
+                <div class="text-center md:text-left">
+                    <div class="inline-flex items-center justify-center md:justify-start gap-3 mb-4">
+                        <div class="w-10 h-10 instagram-gradient rounded-xl flex items-center justify-center">
+                            <i class="fab fa-instagram text-white text-lg"></i>
+                        </div>
+                        <span class="text-white font-bold text-lg">Reel Downloader</span>
+                    </div>
+                    <p class="text-white/70 text-sm">Download Instagram Reels with ease and in HD quality</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="text-center">
+                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-white/70 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#" class="text-white/70 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-white/70 hover:text-white transition-colors">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Links -->
+                <div class="text-center md:text-right">
+                    <h4 class="text-white font-semibold mb-4">Follow Us</h4>
+                    <div class="flex justify-center md:justify-end gap-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t border-white/20 pt-6 mt-6">
+                <div class="text-center">
+                    <p class="text-white/70 text-sm mb-2">Made with <i class="fas fa-heart text-red-400 animate-pulse"></i> for Instagram lovers</p>
+                    <p class="text-white/50 text-xs">© 2024 Reel Downloader. Not affiliated with Instagram.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Paste from clipboard
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('reelUrl').value = text;
+            } catch (err) {
+                console.log('Failed to read clipboard');
+            }
+        }
+
+        function showResult() {
+            const resultSection = document.getElementById('resultSection');
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Handle form submission
+        document.getElementById('downloadForm').addEventListener('submit', function(e) {
+            const reelUrl = document.getElementById('reelUrl').value.trim();
+            
+            if (!reelUrl || !reelUrl.includes('instagram.com')) {
+                alert('Please enter a valid Instagram Reel URL');
+                e.preventDefault();
+                return;
+            }
+            
+            showResult();
+            
+            const searchingContent = document.getElementById('searchingContent');
+            const successContent = document.getElementById('successContent');
+            const completeContent = document.getElementById('completeContent');
+            
+            searchingContent.classList.remove('hidden');
+            successContent.classList.add('hidden');
+            completeContent.classList.add('hidden');
+        });
+
+        // Show success state after page load if download_url exists
+        window.addEventListener('load', function() {
+            const downloadUrl = '{{ download_url|escapejs }}';
+            if (downloadUrl) {
+                showResult();
+                setTimeout(() => {
+                    const searchingContent = document.getElementById('searchingContent');
+                    const successContent = document.getElementById('successContent');
+                    const completeContent = document.getElementById('completeContent');
+                    
+                    searchingContent.classList.add('hidden');
+                    successContent.classList.remove('hidden');
+                    
+                    // Automatically trigger the download
+                    document.getElementById('downloadLink').click();
+                    
+                    // Show completion message after a short delay
+                    setTimeout(() => {
+                        successContent.classList.add('hidden');
+                        completeContent.classList.remove('hidden');
+                    }, 1500);
+                }, 1000);
+            }
+        });
+    </script>
+
+</body>
+</html>
