@@ -16,10 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.sitemaps.views import sitemap
+from downloader.sitemaps import StaticViewSitemap
 from downloader.views import index, download_video
+
+sitemaps = {
+    'static': StaticViewSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('download/', download_video, name='download_video'),
+
+    # ✅ sitemap
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
 ]
