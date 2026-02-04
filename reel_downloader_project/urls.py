@@ -41,7 +41,7 @@ def sitemap_xml(request):
   </url>
 </urlset>
 """
-    return HttpResponse(xml, content_type="application/xml")
+    return HttpResponse(xml, content_type="text/plain")
 
 
 sitemaps = {
