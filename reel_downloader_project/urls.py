@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.contrib.sitemaps.views import sitemap
+# from django.contrib.sitemaps.views import sitemap
 from downloader.sitemaps import StaticViewSitemap
 from downloader.views import index, download_video
 from django.http import HttpResponse
@@ -30,6 +30,20 @@ def robots_txt(request):
     return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
+def sitemap_xml(request):
+    xml = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://instareelsave.onrender.com/</loc>
+  </url>
+  <url>
+    <loc>https://instareelsave.onrender.com/download/</loc>
+  </url>
+</urlset>
+"""
+    return HttpResponse(xml, content_type="application/xml")
+
+
 sitemaps = {
     'static': StaticViewSitemap,
 }
@@ -40,6 +54,6 @@ urlpatterns = [
     path('download/', download_video, name='download_video'),
 
     # ✅ sitemap
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
+    path('sitemap.xml', sitemap_xml),
     path("robots.txt", robots_txt)
 ]
