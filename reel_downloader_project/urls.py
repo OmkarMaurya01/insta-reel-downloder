@@ -19,6 +19,16 @@ from django.urls import path
 from django.contrib.sitemaps.views import sitemap
 from downloader.sitemaps import StaticViewSitemap
 from downloader.views import index, download_video
+from django.http import HttpResponse
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Sitemap: https://instareelsave.onrender.com/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
+
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -31,4 +41,5 @@ urlpatterns = [
 
     # ✅ sitemap
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
+    path("robots.txt", robots_txt)
 ]
